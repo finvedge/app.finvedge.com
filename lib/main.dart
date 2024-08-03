@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 // import 'src/app.dart';
+import 'src/controllers/theme_controller.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/api.dart';
 // import 'src/settings/settings_controller.dart';
@@ -28,7 +29,7 @@ void main() async {
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
   // runApp(const MyApp(settingsController: settingsController));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
@@ -41,15 +42,16 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final ThemeController themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: ThemeMode.dark,
+      themeMode: themeController.theme,
       locale: const Locale('en'),
       fallbackLocale: const Locale('en'),
       scrollBehavior: MyCustomScrollBehavior(),

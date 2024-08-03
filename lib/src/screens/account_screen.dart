@@ -24,6 +24,27 @@ class AccountScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.settings),
           ),
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              print(value); // Handle menu item selection
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem<String>(
+                  value: 'Option 1',
+                  child: Text('Option 1'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'Option 2',
+                  child: Text('Option 2 is long text k'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'Option 3',
+                  child: Text('Option 3'),
+                ),
+              ];
+            },
+          ),
         ],
       ),
       body: Center(

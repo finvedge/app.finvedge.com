@@ -1,3 +1,4 @@
+import 'package:finvedge/src/screens/policies_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,20 +44,20 @@ class MyBottomAppBar extends StatelessWidget {
           const SizedBox(width: 10),
           IconButton(
             onPressed: () {
-              if (_authController.isLoggedIn.value) {
-                // Get.to(
-                //   () => NotesScreen(),
-                //   preventDuplicates: true,
-                // );
-              } else {
-                Get.to(
-                  () => AuthScreen(),
-                  preventDuplicates: true,
-                );
-              }
+              // if (_authController.isLoggedIn.value) {
+              // Get.to(
+              //   () => NotesScreen(),
+              //   preventDuplicates: true,
+              // );
+              // } else {
+              Get.to(
+                () => PoliciesScreen(),
+                preventDuplicates: true,
+              );
+              // }
             },
             iconSize: 30.0,
-            tooltip: 'Notes',
+            tooltip: 'Policies',
             icon: const Icon(Icons.sticky_note_2_sharp),
           ),
           IconButton(
