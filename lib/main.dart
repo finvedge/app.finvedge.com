@@ -1,10 +1,13 @@
+import 'package:finvedge/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'providers/router_provider.dart';
 
 // import 'src/app.dart';
 import 'src/controllers/theme_controller.dart';
@@ -29,7 +32,9 @@ void main() async {
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
   // runApp(const MyApp(settingsController: settingsController));
-  runApp(MyApp());
+  runApp(const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
@@ -41,21 +46,26 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final ThemeController themeController = Get.put(ThemeController());
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode themeMode = ref.watch(themeProvider);
+    final goRouter = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      themeMode: themeMode,
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: themeController.theme,
       locale: const Locale('en'),
-      fallbackLocale: const Locale('en'),
+      // fallbackLocale: const Locale('en'),
       scrollBehavior: MyCustomScrollBehavior(),
-      home: SplashScreen(),
+      routerConfig: goRouter,
+      // routerDelegate: goRouter.routerDelegate,
+      // routeInformationParser: goRouter.routeInformationParser,
+      // home: SplashScreen(),
     );
   }
 }

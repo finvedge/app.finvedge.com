@@ -6,7 +6,7 @@ import '../controllers/auth_controller.dart';
 // import '../screens/notes_screen.dart';
 import '../screens/account_screen.dart';
 import '../screens/auth_screen.dart';
-import '../screens/settings_screen.dart';
+import '../../screens/settings_screen.dart';
 import '../widgets/my_bottom_app_bar.dart';
 
 import '../services/api.dart';
