@@ -13,16 +13,14 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Finvedge'),
       ),
       drawer: const MyDrawer(),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            Text('testing'),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/settings');
-                // GoRouter.of(context).go('/settings');
-              },
-              child: Text('test'),
+            SizedBox(height: 16),
+            Text(
+              'Under active development',
+              textAlign: TextAlign.center,
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-import 'package:finvedge/providers/theme_provider.dart';
+import 'package:finvedge/providers/router_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +7,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'providers/router_provider.dart';
+import 'package:go_router/go_router.dart';
 
 // import 'src/app.dart';
+import 'providers/theme_provider.dart';
 import 'src/controllers/theme_controller.dart';
-import 'src/screens/splash_screen.dart';
 import 'src/services/api.dart';
 // import 'src/settings/settings_controller.dart';
 // import 'src/settings/settings_service.dart';
+
+import 'screens/splash_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/auth_screen.dart';
+import 'screens/settings_screen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -52,7 +57,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeMode themeMode = ref.watch(themeProvider);
-    final goRouter = ref.watch(goRouterProvider);
+    final GoRouter goRouter = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -60,12 +65,10 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       locale: const Locale('en'),
-      // fallbackLocale: const Locale('en'),
       scrollBehavior: MyCustomScrollBehavior(),
-      routerConfig: goRouter,
       // routerDelegate: goRouter.routerDelegate,
       // routeInformationParser: goRouter.routeInformationParser,
-      // home: SplashScreen(),
+      routerConfig: goRouter,
     );
   }
 }
