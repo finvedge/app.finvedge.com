@@ -7,7 +7,7 @@ import '../screens/account_screen.dart';
 class WelcomeController extends GetxController {
   var currentIndex = 1.obs;
   var screens = [
-    HomeScreen(),
+    const HomeScreen(),
     // NotesScreen(),
     AccountScreen(),
     AccountScreen(),

@@ -1,22 +1,26 @@
-import 'package:finvedge/helpers/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class MyDrawer extends StatelessWidget {
+import 'package:finvedge/providers/auth_provider.dart';
+
+class MyDrawer extends ConsumerWidget {
   const MyDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
+  
     return Drawer(
       child: ListView(
         children: [
-          const UserAccountsDrawerHeader(
-            accountName: Text('Welcome Guest'),
-            accountEmail: Text(''),
+          UserAccountsDrawerHeader(
+            accountName: Text(auth?.name ?? 'Welcome Guest'),
+            accountEmail: Text(auth?.email ?? ''),
             // currentAccountPicture: CircleAvatar(
             //   backgroundImage: NetworkImage('https://dummyimage.com/300&text=+'),
             // ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.black,
               image: DecorationImage(
                 image: AssetImage('assets/images/drawer_header.jpg'),
@@ -31,19 +35,19 @@ class MyDrawer extends StatelessWidget {
             //   // ],
           ),
           ListTile(
-            title: const Text('Credit Card Leads'),
-            leading: const Icon(Icons.sticky_note_2_sharp),
+            title: const Text('Members'),
+            leading: const Icon(Icons.group_rounded),
             onTap: () {
               Navigator.pop(context);
               context.goNamed('credit-card-leads');
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            title: const Text('Credit Card Leads'),
+            leading: const Icon(Icons.credit_card_rounded),
             onTap: () {
               Navigator.pop(context);
-              context.goNamed('settings');
+              context.goNamed('credit-card-leads');
             },
           ),
           ListTile(
@@ -54,6 +58,15 @@ class MyDrawer extends StatelessWidget {
               context.goNamed('auth');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            onTap: () {
+              Navigator.pop(context);
+              context.goNamed('settings');
+            },
+          ),
+          
         ],
       ),
     );

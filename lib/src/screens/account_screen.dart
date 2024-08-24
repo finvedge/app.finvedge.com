@@ -1,8 +1,6 @@
-import 'dart:convert';
-
-import '../controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/auth_controller.dart';
 
 // import '../services/firebase_api.dart';
 import 'settings_screen.dart';
@@ -26,7 +24,7 @@ class AccountScreen extends StatelessWidget {
           ),
           PopupMenuButton<String>(
             onSelected: (String value) {
-              print(value); // Handle menu item selection
+              // print(value); // Handle menu item selection
             },
             itemBuilder: (BuildContext context) {
               return [

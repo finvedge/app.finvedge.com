@@ -1,12 +1,14 @@
 import 'dart:convert';
-
-// ignore: library_prefixes
-import 'package:get/get.dart' as GET;
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
-import '../constants.dart';
+// import 'package:get/get.dart' as GET;
+// import 'package:get_storage/get_storage.dart';
+
+import './constants.dart';
+
+const storage = FlutterSecureStorage();
 
 class Api {
   static const baseUrl = kApiBase;
@@ -19,7 +21,7 @@ class Api {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (request, handler) async {
-          var token = await GetStorage().read('auth_token');
+          var token = await storage.read(key: 'authToken');
           var headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -29,30 +31,30 @@ class Api {
           return handler.next(request);
         },
         onResponse: (response, handler) {
-          // print('RES ${response.data}');
-          if (response.data['success'] == false) {
-            if (GET.Get.isDialogOpen == true) {
-              GET.Get.back();
-            }
-            GET.Get.snackbar(
-              'Error'.tr,
-              response.data['message'] ?? 'An error occurred',
-              snackPosition: GET.SnackPosition.TOP,
-            );
-            // throw response.data;
-          }
           return handler.next(response);
         },
         onError: (error, handler) {
-          if (GET.Get.isDialogOpen == true) {
-            GET.Get.back();
+          final response = error.response;
+          if (response != null) {
+            // Return the error response data as a successful response
+            return handler.resolve(Response(
+              requestOptions: error.requestOptions,
+              data: response.data,
+              statusCode: response.statusCode,
+              statusMessage: response.statusMessage,
+              headers: response.headers,
+            ));
+          } else {
+            return handler.resolve(Response(
+              requestOptions: error.requestOptions,
+              data: [],
+              statusCode: 500,
+              statusMessage: 'Connection broke',
+            ));
+
+            // Handle other errors like network errors
+            // return handler.next(error);
           }
-          GET.Get.snackbar(
-            'Error'.tr,
-            error.response?.data['message'] ?? 'An error occrred, try later',
-            snackPosition: GET.SnackPosition.TOP,
-          );
-          return handler.next(error);
         },
       ),
     );
@@ -65,6 +67,12 @@ class Api {
       '$baseUrl/wp-json/app/v1/login/',
       data: jsonEncode(loginData),
     );
+  }
+
+  static Future<Response> getUserSilently({
+    required String token,
+  }) async {
+    return dio.post('$baseUrl/wp-json/app/v1/user');
   }
 
   static Future<Response> register({
@@ -81,14 +89,15 @@ class Api {
         data: jsonEncode({'token': token}));
   }
 
-  static Future getUserSilently({required String token}) async {
-    final response = await http.get(Uri.parse('$baseUrl/wp-json/app/v1/user'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-          },
-        // body: jsonEncode({'token': token})
-        );
+  static Future getUserSilently2({required String token}) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/wp-json/app/v1/user'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      // body: jsonEncode({'token': token})
+    );
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

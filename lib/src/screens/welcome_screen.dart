@@ -9,9 +9,6 @@ import '../screens/auth_screen.dart';
 import '../../screens/settings_screen.dart';
 import '../widgets/my_bottom_app_bar.dart';
 
-import '../services/api.dart';
-
-import '../constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
@@ -73,7 +70,7 @@ class WelcomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                   Get.to(
-                    () => SettingsScreen(),
+                    () => const SettingsScreen(),
                     preventDuplicates: true,
                   );
                 },
@@ -90,7 +87,7 @@ class WelcomeScreen extends StatelessWidget {
                     );
                   } else {
                     Get.to(
-                      () => AuthScreen(),
+                      () => const AuthScreen(),
                       preventDuplicates: true,
                     );
                   }

@@ -36,6 +36,5 @@ class Error404Screen extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

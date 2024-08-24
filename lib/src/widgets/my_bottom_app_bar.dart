@@ -51,7 +51,7 @@ class MyBottomAppBar extends StatelessWidget {
               // );
               // } else {
               Get.to(
-                () => PoliciesScreen(),
+                () => const PoliciesScreen(),
                 preventDuplicates: true,
               );
               // }
@@ -69,7 +69,7 @@ class MyBottomAppBar extends StatelessWidget {
                 );
               } else {
                 Get.to(
-                  () => AuthScreen(),
+                  () => const AuthScreen(),
                   preventDuplicates: true,
                 );
               }

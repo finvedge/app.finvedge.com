@@ -1,4 +1,6 @@
+import 'package:finvedge/providers/auth_provider.dart';
 import 'package:finvedge/screens/credit_card_leads_screen.dart';
+import 'package:finvedge/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,23 +15,28 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   String? redirect(BuildContext context) {
     return null;
   }
-  
+
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/',
+    initialLocation: '/splash',
     routes: [
+      GoRoute(
+          path: '/splash',
+          name: 'splash',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SplashScreen();
+          }),
       GoRoute(
         path: '/',
         name: 'home',
         builder: (BuildContext context, GoRouterState state) {
-          return HomeScreen();
+          return const HomeScreen();
         },
         routes: [
           GoRoute(
             path: 'settings',
             name: 'settings',
-            builder: (context, state) =>
-                const SettingsScreen(),
+            builder: (context, state) => const SettingsScreen(),
           ),
           GoRoute(
             path: 'auth',
@@ -50,15 +57,23 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         ],
       ),
     ],
-    errorBuilder: (BuildContext context, GoRouterState state) => const Error404Screen(),
-    // redirect: (context, state) async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   final lastLocation = prefs.getString('lastLocation') ?? '/';
-    //   if (state.location == '/') {
-    //     return lastLocation;
-    //   }
-    //   return null;
-    // },
+    errorBuilder: (BuildContext context, GoRouterState state) {
+      return const Error404Screen();
+    },
+    redirect: (context, state) async {
+      // final prefs = await SharedPreferences.getInstance();
+      // final lastLocation = prefs.getString('lastLocation') ?? '/';
+      // if (state.location == '/') {
+      // return lastLocation;
+      // }
+      // final isUserLoading = ref.watch(isUserLoadingProvider);
+      // if (!isUserLoading) {
+        // ref.read(isUserLoadingProvider.notifier).setLoading(true);
+        await ref.read(authProvider.notifier).silentLogin();
+        // ref.read(isUserLoadingProvider.notifier).setLoading(false);
+      // }
+      return null;
+    },
     // navigatorBuilder: (context, state, child) {
     //   return WillPopScope(
     //     onWillPop: () async {

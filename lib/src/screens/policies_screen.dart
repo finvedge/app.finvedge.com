@@ -7,16 +7,16 @@ class PoliciesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Policies'),
+        title: const Text('Policies'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ListTile(
               leading: const Icon(Icons.notes_rounded),
-              title: Text('Policy name'),
-              subtitle: Text('some text'),
-              trailing: Column(
+              title: const Text('Policy name'),
+              subtitle: const Text('some text'),
+              trailing: const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Icon(Icons.access_alarm_rounded),

@@ -1,9 +1,8 @@
 import 'dart:async';
-
-import 'package:finvedge/helpers/navigation.dart';
-import 'package:finvedge/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
 
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
@@ -11,14 +10,9 @@ class SplashScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // always navigate to home
-    Future<void> checkUser() async {
-      final isLoggedIn = await ref.read(authProvider.notifier).silentLogin();
-      if (context.mounted) {
-        navigateTo(context, routeName: '/home', replace: true);
-      }
-    }
-
-    checkUser();
+    Future.delayed(const Duration(seconds: 3), () {
+      context.goNamed('home');
+    });
 
     return const Scaffold(
       body: Center(

@@ -1,28 +1,27 @@
-import 'package:finvedge/providers/router_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+// import 'package:get/get.dart';
+// import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 
 // import 'src/app.dart';
-import 'providers/theme_provider.dart';
-import 'src/controllers/theme_controller.dart';
-import 'src/services/api.dart';
+import './helpers/api.dart';
+import './providers/theme_provider.dart';
+import './providers/router_provider.dart';
+// import 'src/controllers/theme_controller.dart';
 // import 'src/settings/settings_controller.dart';
 // import 'src/settings/settings_service.dart';
 
-import 'screens/splash_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/auth_screen.dart';
-import 'screens/settings_screen.dart';
+// import 'screens/splash_screen.dart';
+// import 'screens/home_screen.dart';
+// import 'screens/auth_screen.dart';
+// import 'screens/settings_screen.dart';
 
 void main() async {
-  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   Api.initializeInterceptors();
   // Set up the SettingsController, which will glue user settings to multiple

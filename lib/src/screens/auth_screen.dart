@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
 class AuthScreen extends StatelessWidget {
-  AuthScreen({super.key});
+  const AuthScreen({super.key});
 
-  final _authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,7 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
 
   final _authController = Get.find<AuthController>();
 
-  Map<String, dynamic> _registerData = {};
+  final Map<String, dynamic> _registerData = {};
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -75,7 +74,6 @@ class _AuthRegisterFormState extends State<AuthRegisterForm> {
           _isLoading = false;
         });
       } catch (e) {
-        print(e);
         setState(() {
           _isLoading = false;
         });
@@ -214,7 +212,7 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
 
   final _authController = Get.find<AuthController>();
 
-  Future<void> _singInWithGoogle() async {
+  // Future<void> _singInWithGoogle() async {
     // try {
     //   final user = await GoogleSignInApi.login();
     //   if (user == null) {
@@ -234,7 +232,7 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
     //     SnackBar(content: Text(error.toString())),
     //   );
     // }
-  }
+  // }
 
   // ignore: prefer_final_fields
   Map<String, dynamic> _loginData = {};
